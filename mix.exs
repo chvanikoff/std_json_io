@@ -23,7 +23,8 @@ defmodule StdJsonIo.Mixfile do
 
   def application do
     [
-      applications: [:logger, :porcelain]
+      applications: [:logger, :porcelain],
+      mod: {StdJsonIo.Application, []}
     ]
   end
 
