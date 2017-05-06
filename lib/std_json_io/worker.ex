@@ -17,13 +17,25 @@ defmodule StdJsonIo.Worker do
       nil -> {:error, :json_error}
       {:error, reason} -> {:error, reason}
       {:ok, json} ->
-        Proc.send_input(state.js_proc, json <> "\n")
-        receive do
-          {_js_pid, :data, :out, msg} ->
-            {:reply, {:ok, msg}, state}
-          response ->
-            {:reply, {:error, response}, state}
-        end
+	receiver = fn f, data ->
+	  receive do
+	    {_pid, :data, :out, msg} ->
+	      new_data = data <> msg
+	      case Poison.decode(new_data) do
+		{:error, _} ->
+		  # Couldn't decode JSON, there are more chunks
+		  # to receive and concat with
+		  f.(f, new_data)
+		{:ok, _} ->
+		  # All chunks received
+		  {:reply, {:ok, new_data}, state}
+	      end
+	    other ->
+	      {:reply, {:error, other}, state}
+	  end
+	end
+	Proc.send_input(state.js_proc, json <> "\n")
+	receiver.(receiver, "")
     end
   end
 

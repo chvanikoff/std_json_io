@@ -18,4 +18,10 @@ defmodule StdJsonIoTest do
     expected = %{"response" => message}
     assert StdJsonIoMock.json_call!(message) == expected
   end
+
+  test "Can handle big response" do
+    message = %{"thisishuge" => String.duplicate("Lorem Ipsum Dolor Sit Amet", 10000)}
+    expected = {:ok, %{"response" => message}}
+    assert StdJsonIoMock.json_call(message) == expected
+  end
 end
