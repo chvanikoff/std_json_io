@@ -14,7 +14,7 @@ defmodule StdJsonIo do
 
 
       def start_link(opts \\ []) do
-        Supervisor.start_link(__MODULE__, :ok, name: {:local, __MODULE__})
+        Supervisor.start_link(__MODULE__, :ok, name: __MODULE__)
       end
 
       def init(:ok) do
