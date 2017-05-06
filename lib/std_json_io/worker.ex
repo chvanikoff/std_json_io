@@ -17,7 +17,7 @@ defmodule StdJsonIo.Worker do
       nil -> {:error, :json_error}
       {:error, reason} -> {:error, reason}
       {:ok, json} ->
-        Proc.send_input(state.js_proc, json)
+        Proc.send_input(state.js_proc, json <> "\n")
         receive do
           {_js_pid, :data, :out, msg} ->
             {:reply, {:ok, msg}, state}
