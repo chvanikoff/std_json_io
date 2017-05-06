@@ -2,7 +2,8 @@ defmodule StdJsonIoTest do
   use ExUnit.Case
   doctest StdJsonIo
 
-  test "the truth" do
-    assert 1 + 1 == 2
+  setup do
+    {:ok, _} = StdJsonIoMock.start_link([])
+    {:ok, %{}}
   end
 end
