@@ -17,8 +17,8 @@ defmodule StdJsonIo.Mixfile do
      maintainers: @maintainers,
      description: "Application for managing and communicating with IO servers via JSON",
      homepage_url: @url,
-     docs: docs,
-     deps: deps]
+     docs: docs(),
+     deps: deps()]
   end
 
   def application do
