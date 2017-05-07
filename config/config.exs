@@ -28,3 +28,7 @@ use Mix.Config
 # here (which is why it is important to import them last).
 #
 #     import_config "#{Mix.env}.exs"
+config :std_json_io,
+  pool_size: 5,
+  pool_max_overflow: 10,
+  script: "python -u test/fixtures/echo.py"
