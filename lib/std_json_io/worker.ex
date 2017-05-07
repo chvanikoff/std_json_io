@@ -22,13 +22,13 @@ defmodule StdJsonIo.Worker do
 	    {_pid, :data, :out, msg} ->
 	      new_data = data <> msg
 	      case Poison.decode(new_data) do
-		{:error, _} ->
-		  # Couldn't decode JSON, there are more chunks
-		  # to receive and concat with
-		  f.(f, new_data)
 		{:ok, _} ->
 		  # All chunks received
 		  {:reply, {:ok, new_data}, state}
+		_ ->
+		  # Couldn't decode JSON, there are more chunks
+		  # to receive and concat with
+		  f.(f, new_data)
 	      end
 	    other ->
 	      {:reply, {:error, other}, state}
