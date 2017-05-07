@@ -6,19 +6,21 @@ defmodule StdJsonIo do
     end
   end
 
-  def json_call(map, timeout \\ 10000) do
+  def json_call(data, timeout \\ 10000) do
     result = :poolboy.transaction(StdJsonIo.Pool, fn worker ->
-      GenServer.call(worker, {:json, map}, timeout)
+      GenServer.cast(worker, {:json, data, self()})
+      receive do
+	response ->
+	  response
+      after
+	timeout ->
+	  %{"error" => "timeout"}
+      end
     end)
-    case result do
-      {:ok, json} ->
-        {:ok, data} = Poison.decode(json)
-        if data["error"] do
-          {:error, Map.get(data, "error")}
-        else
-          {:ok, data}
-        end
-      other -> other
+    if result["error"] do
+      {:error, Map.get(result, "error")}
+    else
+      {:ok, result}
     end
   end
 end
