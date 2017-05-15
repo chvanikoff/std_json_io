@@ -23,7 +23,7 @@ defmodule StdJsonIo.Worker do
     new_buffer = buffer <> data
     case Poison.decode(new_buffer) do
       {:ok, decoded} ->
-	Process.send(state[:reply_to], decoded, [])
+	Process.send(state[:reply_to], {:std_json_io_response, decoded}, [])
 	{:noreply, %{state | buffer: ""}}
       _ ->
 	{:noreply, %{state | buffer: new_buffer}}

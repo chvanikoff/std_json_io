@@ -10,7 +10,7 @@ defmodule StdJsonIo do
     result = :poolboy.transaction(StdJsonIo.Pool, fn worker ->
       GenServer.cast(worker, {:json, data, self()})
       receive do
-	response ->
+        {:std_json_io_response, response} ->
 	  response
       after
 	timeout ->
