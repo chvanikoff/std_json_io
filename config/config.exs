@@ -31,6 +31,6 @@ use Mix.Config
 config :std_json_io,
   pool_size: 5,
   pool_max_overflow: 10,
-  script: "python -u test/fixtures/echo.py"
+  script: "python -u test/fixtures/echo.py 2>/dev/null"
 
 config :porcelain, driver: Porcelain.Driver.Basic

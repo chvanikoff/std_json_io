@@ -42,3 +42,6 @@ config :std_json_io,
 # or
 data = StdJsonIo.json_call!(%{"component" => "my/component.js"}
 ```
+
+### Development
+There are some tests taking long to run (testing timeouts, long replies, etc.) with tag `long: true` which are excluded by default. To run all the tests including long, you have to run `mix test --include long:true`
