@@ -8,7 +8,8 @@ defmodule StdJsonIo.Application do
       name: {:local, StdJsonIo.Pool},
       worker_module: StdJsonIo.Worker,
       size: Keyword.get(config, :pool_size, 15),
-      max_overflow: Keyword.get(config, :pool_max_overflow, 10)
+      max_overflow: Keyword.get(config, :pool_max_overflow, 10),
+      strategy: :fifo
     ]
     children = [
       :poolboy.child_spec(StdJsonIo.Pool, pool_options, [script: Keyword.fetch!(config, :script)])
