@@ -49,6 +49,6 @@ defmodule StdJsonIoTest do
   test "Can handle incorrect response from program" do
     message = %{"test" => "not_json"}
     expected = {:error, %{"message" => "timeout", "buffer" => "plaintext"}}
-    assert StdJsonIo.json_call(message) == expected
+    assert StdJsonIo.json_call(message, 500) == expected
   end
 end
