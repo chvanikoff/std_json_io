@@ -29,7 +29,7 @@ You can either configure as additional arguments of the use statement, or in you
 config :std_json_io,
   pool_size: 5,
   pool_max_overflow: 10,
-  script: "node_modules/.bin/react-stdio"
+  script: Path.expand("node_modules/.bin/react-stdio", __DIR__)
 ```
 
 * `pool_size` - see [Poolboy options](https://github.com/devinus/poolboy#options), option "size"
